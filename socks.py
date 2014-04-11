@@ -118,6 +118,9 @@ def get_proxy_from_config_file(destpair):
     config_file = os.environ.get("SOCKS_CONFIG", None)
     if config_file:
         ip, port = destpair
+        no_proxy_hosts = os.environ.get("SOCKS_NO_PROXY_HOSTS", "").split(":")
+        if ip in no_proxy_hosts:
+          return None
         entry_with_port = "%s:%s" % (ip, port)
         entry_without_port = "%s" % (ip,)
         config.read(config_file)
