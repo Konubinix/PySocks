@@ -513,10 +513,10 @@ class socksocket(socket.socket):
         """
         config_proxy = get_proxy_from_config_file(dest_pair)
         if config_proxy:
+            logger.debug("%s => %s" % (str(dest_pair), config_proxy[0]))
             dest_pair = config_proxy[0]
-            logger.debug("New destpair = %s" % str(dest_pair))
             self.proxy = config_proxy[1]
-            logger.debug("New proxy information = %s" % str(self.proxy))
+            logger.debug("Connecting with proxy information: %s" % str(self.proxy))
 
         proxy_type, proxy_addr, proxy_port, rdns, username, password = self.proxy
         dest_addr, dest_port = dest_pair
