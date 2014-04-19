@@ -60,6 +60,7 @@ import os
 import logging
 logging.basicConfig()
 logger = logging.getLogger("SOCKS")
+logger.setLevel(int(os.environ.get("SOCKS_DEBUG", logging.WARN)))
 import ConfigParser
 
 PROXY_TYPE_SOCKS4 = SOCKS4 = 1
