@@ -116,8 +116,10 @@ config = ConfigParser.ConfigParser()
 config.optionxform = str    # keys not converted into lower case
 
 def get_proxy_from_config_file(destpair):
-    config_file = os.environ.get("SOCKS_CONFIG", None)
-    if config_file:
+    config_file = os.environ.get(
+        "SOCKS_CONFIG",
+        os.path.expanduser("~/.socks.config"))
+    if config_file and os.path.exists(config_file):
         ip, port = destpair
         no_proxy_hosts = os.environ.get("SOCKS_NO_PROXY_HOSTS", "").split(":")
         if ip in no_proxy_hosts:
