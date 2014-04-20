@@ -163,6 +163,11 @@ def proxify():
     import socks
     import socket
     socket.socket = socks.socksocket
+    def create_connection(address, timeout=None, source_address=None):
+        sock = socks.socksocket()
+        sock.connect(address)
+        return sock
+    socket.create_connection = create_connection
 
 def set_default_proxy(proxy_type=None, addr=None, port=None, rdns=True, username=None, password=None):
     """
