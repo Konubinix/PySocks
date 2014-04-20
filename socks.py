@@ -168,6 +168,14 @@ def proxify():
         sock.connect(address)
         return sock
     socket.create_connection = create_connection
+    oldgethostbyname = socket.gethostbyname
+    def gethostbyname(name):
+        proxy_config = get_proxy_from_config_file((name, 0))
+        if proxy_config:
+            return proxy_config[0][0]
+        else:
+            return oldgethostbyname(name)
+    socket.gethostbyname = gethostbyname
 
 def set_default_proxy(proxy_type=None, addr=None, port=None, rdns=True, username=None, password=None):
     """
